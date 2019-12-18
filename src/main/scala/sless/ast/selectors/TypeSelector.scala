@@ -7,4 +7,5 @@ case class TypeSelector(string: String) extends SelectorImp {
 
   override def compileDebug(): String = "<Selector " + debugName + " : " + string + ">"
 
+  override def compile(): String = string
 }

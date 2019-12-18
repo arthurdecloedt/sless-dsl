@@ -47,9 +47,9 @@ class ParserBase extends BaseDSL with PropertyDSL with SelectorDSL with Compilab
 
   protected def bindTo(s: SelectorImp, declarations: Seq[DeclarationImp]): RuleImp = RuleImp(s, MultiDeclaration(declarations))
 
-  def compile(sheet: CssImp): String = sheet.compileDebug()
+  def compile(sheet: CssImp): String = sheet.compile()
 
-  def pretty(sheet: CssImp, spaces: Int): String = ???
+  def pretty(sheet: CssImp, spaces: Int): String = sheet.prettyPrint(indent = spaces)
 
   def value(string: String): ValueImp = ValueImp(string)
 }

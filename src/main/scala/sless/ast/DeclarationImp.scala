@@ -1,5 +1,5 @@
 package sless.ast
 
-class DeclarationImp extends CompilableDebugImp {
+class DeclarationImp extends CompilableImp {
 
 }

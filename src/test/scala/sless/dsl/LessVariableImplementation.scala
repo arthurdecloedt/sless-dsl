@@ -1,10 +1,13 @@
 package sless.dsl
 
+import sless.ast.ParserBase
+
 object LessVariableImplementation {
   type DSL = PropertyDSL with SelectorDSL with ValueDSL with Compilable
-  val dsl: DSL = ???
 
-  import LessVariableImplementation.dsl._
+  val dsl: DSL = new ParserBase()
+
+  import dsl._
 
   /**
     * Create a Css Declaration for a background-color in the given color
@@ -12,7 +15,8 @@ object LessVariableImplementation {
     * @param color
     * @return
     */
-  def coloredBg(color: String): dsl.Declaration = ???
+  def coloredBg(color: String): dsl.Declaration = prop("background-color") := value(color)
+
 
   /**
     * Create a css sheet that colors an element with the given id in red
@@ -21,7 +25,10 @@ object LessVariableImplementation {
     * @param id
     * @return
     */
-  def colorNamedRed(id: String): dsl.Css = ???
+  def colorNamedRed(id: String): dsl.Css = {
+    css(All.##(id) {coloredBg("red")})
+  }
+
 
   /**
     * Create a rule for the given element type that has an aspect ratio of 2/1
@@ -29,6 +36,6 @@ object LessVariableImplementation {
     * @param height
     * @return
     */
-  def doubledWidth(elementType: String, height: Int): dsl.Rule = ???
+  def doubledWidth(elementType: String, height: Int): dsl.Rule = tipe(elementType) (prop("height") := value(height.toString) , prop("width") := value((height*2).toString))
 
 }

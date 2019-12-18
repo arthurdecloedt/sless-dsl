@@ -4,4 +4,7 @@ import sless.ast.SelectorImp
 
 case class PseudoClassSelector(selector: SelectorImp, string: String) extends SelectorUnary(selector, string) {
   override val debugName: String = "Pseudo Class"
+
+  override val op: String = ":"
+
 }
