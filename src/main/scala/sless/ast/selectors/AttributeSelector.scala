@@ -1,7 +1,8 @@
 package sless.ast.selectors
 
-import sless.ast.{PropertyImp, SelectorImp, ValueImp}
+import sless.ast.{SelectorImp, ValueImp}
 
-case class AttributeSelector(selector: SelectorImp, string :String, value:ValueImp) extends SelectorImp {
+case class AttributeSelector(selector: SelectorImp, string: String, value: ValueImp) extends SelectorImp {
+  override val debugName: String = "attr"
 
 }

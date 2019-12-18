@@ -1,5 +1,8 @@
 package sless.ast.selectors
 
-class AllSelector {
+import sless.ast.SelectorImp
+
+case class AllSelector() extends SelectorImp {
+  override val debugName: String = "Adj"
 
 }

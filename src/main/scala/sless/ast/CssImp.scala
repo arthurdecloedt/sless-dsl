@@ -1,7 +1,9 @@
 package sless.ast
-import sless.dsl.BaseDSL
 
-case class CssImp(rules: Seq[RuleImp]){
+case class CssImp(rules: Seq[RuleImp]) extends CompilableDebugImp {
+
+  override def compileDebug(): String =
+    "<CSS: " + rules.foldRight("")((a, b) => a.compileDebug() + b) + ">"
 
 
 }
