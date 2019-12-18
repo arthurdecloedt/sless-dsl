@@ -1,5 +1,5 @@
 package sless.ast
 
-class ValueImp(value: String) {
+case class ValueImp(value: String) {
 
 }

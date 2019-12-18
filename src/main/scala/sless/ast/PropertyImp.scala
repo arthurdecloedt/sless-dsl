@@ -1,5 +1,5 @@
 package sless.ast
 
-class PropertyImp {
+case class PropertyImp(property: String) {
 
 }

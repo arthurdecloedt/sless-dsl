@@ -1,5 +1,5 @@
 package sless.ast
 
-class SelectorImp {
+class SelectorImp() {
 
 }

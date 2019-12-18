@@ -1,5 +1,7 @@
 package sless.ast.selectors
 
-class IdSelector(id: String) extends SelectorUnary {
+import sless.ast.SelectorImp
+
+case class IdSelector(selector : SelectorImp, string: String) extends SelectorUnary(selector,string) {
 
 }

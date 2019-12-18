@@ -1,5 +1,7 @@
 package sless.ast.selectors
 
-class ClassSelector extends SelectorUnary {
+import sless.ast.SelectorImp
+
+case class ClassSelector(selector: SelectorImp, string :String) extends SelectorUnary(selector,string) {
 
 }

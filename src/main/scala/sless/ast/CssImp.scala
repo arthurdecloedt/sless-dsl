@@ -1,7 +1,7 @@
 package sless.ast
 import sless.dsl.BaseDSL
 
-class CssImp(rules: Seq[RuleImp]){
+case class CssImp(rules: Seq[RuleImp]){
 
 
 }
