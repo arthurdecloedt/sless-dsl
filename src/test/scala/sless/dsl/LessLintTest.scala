@@ -36,6 +36,7 @@ class LessLintTest extends FunSuite{
     )
 
     val (lintedBool, lintedEx) = aggregateMargins(ex)
+    print(LessLintImplementation.dsl.compile(lintedEx))
     assert(lintedBool === true)
     assert(
       LessLintImplementation.dsl.compile(lintedEx) ===
