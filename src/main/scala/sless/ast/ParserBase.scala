@@ -3,7 +3,7 @@ package sless.ast
 import sless.ast.selectors._
 import sless.dsl._
 
-class ParserBase extends BaseDSL with PropertyDSL with SelectorDSL with Compilable with ValueDSL with LintDSL {
+class ParserBase extends BaseDSL with PropertyDSL with SelectorDSL with Compilable with ValueDSL with LintDSL with CommentDSL {
   type Rule = RuleImp
   type Css = CssImp
   type Selector = SelectorImp
@@ -70,4 +70,8 @@ class ParserBase extends BaseDSL with PropertyDSL with SelectorDSL with Compilab
     * Check if the given sheet contains strictly more than n 'float' properties and, if so, returns true, otherwise false.
     */
   def limitFloats(css: CssImp, n: Integer): Boolean = css.aggrProp("float") > n
+
+  protected def commentRule(rule: RuleImp, str: String): RuleImp = rule.addComment(str)
+
+  protected def commentDeclaration(declaration: DeclarationImp, str: String): DeclarationImp = declaration.addComment(str)
 }

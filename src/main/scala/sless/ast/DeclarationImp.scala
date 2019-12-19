@@ -20,4 +20,6 @@ abstract class DeclarationImp extends CompilableImp {
   def removeMargins: Option[DeclarationImp]
 
   def aggrProp(prop: String): Int
+
+  def addComment(str: String): DeclarationImp
 }

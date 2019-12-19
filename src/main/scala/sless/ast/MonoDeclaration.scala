@@ -1,16 +1,20 @@
 package sless.ast
 
-case class MonoDeclaration(property: PropertyImp, value: ValueImp) extends DeclarationImp {
+case class MonoDeclaration(property: PropertyImp, value: ValueImp, comment: String = null) extends DeclarationImp {
 
   override def condense(): DeclarationImp = this
+
+  override def compile(): String = if (!hasComment) property.compile() + ":" + value.compile() + ";" else property.compile() + ":" + value.compile() + ";" + "/* " + comment + " */"
 
   override def allMargins(): Boolean = false
 
   override def compileDebug(): String = "<Declaration: " + property.compileDebug() + " : " + value.compileDebug() + ">"
 
-  override def compile(): String = property.compile() + ":" + value.compile() + ";"
+  def hasComment:
+  Boolean = comment != null
 
-  override def prettyPrint(indent: Int): String = " " * indent + property.prettyPrint(indent) + ": " + value.prettyPrint(indent) + ";\n"
+  override def prettyPrint(indent: Int): String = if (!hasComment) " " * indent + property.prettyPrint(indent) + ": " + value.prettyPrint(indent) + ";\n"
+  else " " * indent + property.prettyPrint(indent) + ": " + value.prettyPrint(indent) + "; /* " + comment + " */\n"
 
   def notEmpty(): Boolean = property.property != "" && value.value != ""
 
@@ -26,4 +30,7 @@ case class MonoDeclaration(property: PropertyImp, value: ValueImp) extends Decla
   override def replace(orig: DeclarationImp, repl: DeclarationImp): DeclarationImp = if (this.equals(orig)) repl else this
 
   override def aggrProp(prop: String): Int = if (property.property == prop) 1 else 0
+
+  override def addComment(comment: String): DeclarationImp = MonoDeclaration(property, value, comment)
+
 }

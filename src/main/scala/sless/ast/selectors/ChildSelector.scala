@@ -7,5 +7,5 @@ case class ChildSelector(s1: SelectorImp, s2: SelectorImp) extends SelectorBinar
 
   override val op: String = ">"
 
-
+  override val prettyOp: String = " > "
 }

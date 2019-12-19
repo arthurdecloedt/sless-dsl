@@ -1,12 +1,15 @@
 package sless.ast
 
-case class MultiDeclaration(declarations: Seq[DeclarationImp]) extends DeclarationImp {
+case class MultiDeclaration(declarations: Seq[DeclarationImp], comment: String = null) extends DeclarationImp {
   override def compileDebug(): String =
     "<Multidec: " + declarations.foldRight("")((a, b) => a.compileDebug() + b) + ">"
 
-  override def compile(): String = declarations.foldRight("")((a, b) => a.compile() + b)
+  override def compile(): String = if (hasComment) declarations.foldRight("")((a, b) => a.compile() + b) + "/* " + comment + " */" else declarations.foldRight("")((a, b) => a.compile() + b)
 
-  override def prettyPrint(indent: Int): String = declarations.foldLeft("")((a, b) => a + b.prettyPrint(indent))
+  override def prettyPrint(indent: Int): String = if (!hasComment) declarations.foldLeft("")((a, b) => a + b.prettyPrint(indent))
+  else declarations.foldLeft("")((a, b) => a + b.prettyPrint(indent)) + "; /* " + comment + " */"
+
+  def hasComment: Boolean = comment != null
 
   def notEmpty(): Boolean = declarations.nonEmpty && declarations.foldRight(false)((a, b) => a.notEmpty() || b)
 
@@ -29,6 +32,9 @@ case class MultiDeclaration(declarations: Seq[DeclarationImp]) extends Declarati
   override def removeMargins: Option[DeclarationImp] = Some(MultiDeclaration(declarations.flatMap(a => a.removeMargins)))
 
   override def aggrProp(prop: String): Int = declarations.foldRight(0)((a, b) => a.aggrProp(prop) + b)
+
+  override def addComment(comment: String): DeclarationImp = MultiDeclaration(declarations, comment)
+
 
 }
 
