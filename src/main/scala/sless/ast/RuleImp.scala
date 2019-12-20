@@ -11,12 +11,12 @@ case class RuleImp(selector: SelectorImp, declaration: DeclarationImp, comment: 
 
   override def compile(): String = if (!hasComment) (selector.compile() + "{" + declaration.compile() + "}") else "/* " + comment + " */" + selector.compile() + "{" + declaration.compile() + "}"
 
+  def hasComment: Boolean = comment != null
+
   override def compileDebug(): String = "<Rule: " + selector.compileDebug() + " : " + declaration.compileDebug() + ">"
 
   override def prettyPrint(indent: Int): String = if (!hasComment) selector.prettyPrint(indent) + " {\n" + declaration.prettyPrint(indent) + "}"
   else "/* " + comment + " */\n" + selector.prettyPrint(indent) + " {\n" + declaration.prettyPrint(indent) + "}"
-
-  def hasComment: Boolean = comment != null
 
   def addComment(comment: String): RuleImp = RuleImp(selector, declaration, comment)
 

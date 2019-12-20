@@ -6,10 +6,10 @@ case class MultiDeclaration(declarations: Seq[DeclarationImp], comment: String =
 
   override def compile(): String = if (hasComment) declarations.foldRight("")((a, b) => a.compile() + b) + "/* " + comment + " */" else declarations.foldRight("")((a, b) => a.compile() + b)
 
+  def hasComment: Boolean = comment != null
+
   override def prettyPrint(indent: Int): String = if (!hasComment) declarations.foldLeft("")((a, b) => a + b.prettyPrint(indent))
   else declarations.foldLeft("")((a, b) => a + b.prettyPrint(indent)) + "; /* " + comment + " */"
-
-  def hasComment: Boolean = comment != null
 
   def notEmpty(): Boolean = declarations.nonEmpty && declarations.foldRight(false)((a, b) => a.notEmpty() || b)
 

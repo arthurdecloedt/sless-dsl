@@ -4,7 +4,6 @@ import org.scalatest.FunSuite
 
 class ExtendTest extends FunSuite{
   import ExtendImplementation.dsl._
-
   test("Simple extension + exact match") {
     val ex = css(
       All.c("class-name1").extend(All ## "id-name1") {

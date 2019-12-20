@@ -6,12 +6,12 @@ case class MonoDeclaration(property: PropertyImp, value: ValueImp, comment: Stri
 
   override def compile(): String = if (!hasComment) property.compile() + ":" + value.compile() + ";" else property.compile() + ":" + value.compile() + ";" + "/* " + comment + " */"
 
+  def hasComment:
+  Boolean = comment != null
+
   override def allMargins(): Boolean = false
 
   override def compileDebug(): String = "<Declaration: " + property.compileDebug() + " : " + value.compileDebug() + ">"
-
-  def hasComment:
-  Boolean = comment != null
 
   override def prettyPrint(indent: Int): String = if (!hasComment) " " * indent + property.prettyPrint(indent) + ": " + value.prettyPrint(indent) + ";\n"
   else " " * indent + property.prettyPrint(indent) + ": " + value.prettyPrint(indent) + "; /* " + comment + " */\n"
