@@ -40,6 +40,22 @@ class ParserBase extends BaseDSL with PropertyDSL with SelectorDSL with Compilab
     */
   def limitFloats(css: CssImp, n: Integer): Boolean = css.aggrProp("float") > n
 
+  /**
+    * Check if this sheet has rules with overlapping selectors that try to assign a different value to a certain property. The selectors have to be exactly the same
+    *
+    * @param css The sheet
+    * @return True iff there are clashing rules
+    */
+  def hasConflicts(css: CssImp): Boolean = css.hasConflicts
+
+  /**
+    * Get violating rules , different to make the previous function more efficient (can stop after one found)
+    *
+    * @param css The sheet
+    * @return True iff there are clashing rules
+    */
+  def getConflicts(css: CssImp): Seq[String] = css.getConflicts
+
   protected def fromRules(rules: Seq[Rule]): CssImp = CssImp(rules)
 
   protected def assign(p: PropertyImp, value: ValueImp): DeclarationImp = MonoDeclaration(p, value)

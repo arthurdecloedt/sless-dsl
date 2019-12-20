@@ -53,10 +53,27 @@ class LessLintTest extends FunSuite{
     )
     val ex2 = css(container(fldecl))
 
-    val lintedBool1 = limitFloats(ex1,1)
+    val lintedBool1 = limitFloats(ex1, 1)
     assert(lintedBool1 === true)
 
-    val lintedBool2 = limitFloats(ex2,1)
+    val lintedBool2 = limitFloats(ex2, 1)
     assert(lintedBool2 === false)
   }
+
+  test("Detect Clashes") {
+
+    val sel1 = tipe("div") ## "container"
+    val sel2 = tipe("div") ## "container"
+    val sel3 = tipe("p") ## "byline"
+
+    val prop1 = prop("float") := value("left")
+    val prop2 = prop("float") := value("right")
+    val sheet1 = css(
+      N(sel1, sel3)(prop1),
+      sel2(prop2)
+    )
+    assert(hasConflicts(sheet1))
+    print(getConflicts(sheet1))
+  }
+
 }

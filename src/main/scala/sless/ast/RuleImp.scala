@@ -20,4 +20,12 @@ case class RuleImp(selector: SelectorImp, declaration: DeclarationImp, comment: 
 
   def addComment(comment: String): RuleImp = RuleImp(selector, declaration, comment)
 
+  def getSelectorHashes: Seq[Int] = this.selector.getHashes
+
+  def internalDecClash: Boolean = decClash(this)
+
+  def decClash(rule: RuleImp): Boolean = this.declaration.getPairs.forall(a => rule.declaration.getPairs.forall(b => (a._1 != b._1 || a._2 == b._2)))
+
+  def seqMatches(rule: RuleImp): Boolean = this.selector.getHashes.intersect(rule.selector.getHashes).nonEmpty
+
 }

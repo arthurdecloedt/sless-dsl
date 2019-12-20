@@ -1,6 +1,8 @@
 package sless.ast
 
 abstract class DeclarationImp extends CompilableImp {
+  val getPairs: Seq[(String, String)]
+
   val margins: Seq[String] = Seq("margin-top", "margin-right", "margin-bottom", "margin-left")
 
   def condense(): DeclarationImp
@@ -22,4 +24,5 @@ abstract class DeclarationImp extends CompilableImp {
   def aggrProp(prop: String): Int
 
   def addComment(str: String): DeclarationImp
+
 }

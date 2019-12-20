@@ -21,10 +21,26 @@ trait LintDSL extends BaseDSL {
     * the single shorthand property margin. The new margin property takes the place of the first declaration in order of appearance.
     * The values from the individual prorperties are aggregated in the order top-right-bottom-left, with spaces in between.
     */
-  def aggregateMargins(css : Css) : (Boolean, Css)
+  def aggregateMargins(css: Css): (Boolean, Css)
 
   /**
     * Check if the given sheet contains strictly more than n 'float' properties and, if so, returns true, otherwise false.
     */
-  def limitFloats(css : Css, n : Integer) : Boolean
+  def limitFloats(css: Css, n: Integer): Boolean
+
+  /**
+    * Check if this sheet has rules with overlapping selectors that try to assign a different value to a certain property. The selectors have to be exactly the same
+    *
+    * @param css The sheet
+    * @return True iff there are clashing rules
+    */
+  def hasConflicts(css: Css): Boolean
+
+  /**
+    * Get violating rules , different to make the previous function more efficient (can stop after one found)
+    *
+    * @param css The sheet
+    * @return True iff there are clashing rules
+    */
+  def getConflicts(css: Css): Seq[String]
 }

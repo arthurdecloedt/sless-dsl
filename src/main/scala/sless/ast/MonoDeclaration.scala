@@ -2,6 +2,8 @@ package sless.ast
 
 case class MonoDeclaration(property: PropertyImp, value: ValueImp, comment: String = null) extends DeclarationImp {
 
+  override lazy val getPairs: Seq[(String, String)] = Seq((property.property, value.value))
+
   override def condense(): DeclarationImp = this
 
   override def compile(): String = if (!hasComment) property.compile() + ":" + value.compile() + ";" else property.compile() + ":" + value.compile() + ";" + "/* " + comment + " */"

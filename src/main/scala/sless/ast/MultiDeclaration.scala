@@ -1,15 +1,17 @@
 package sless.ast
 
 case class MultiDeclaration(declarations: Seq[DeclarationImp], comment: String = null) extends DeclarationImp {
+  override lazy val getPairs: Seq[(String, String)] = declarations.flatMap(_.getPairs)
+
   override def compileDebug(): String =
     "<Multidec: " + declarations.foldRight("")((a, b) => a.compileDebug() + b) + ">"
 
   override def compile(): String = if (hasComment) declarations.foldRight("")((a, b) => a.compile() + b) + "/* " + comment + " */" else declarations.foldRight("")((a, b) => a.compile() + b)
 
-  def hasComment: Boolean = comment != null
-
   override def prettyPrint(indent: Int): String = if (!hasComment) declarations.foldLeft("")((a, b) => a + b.prettyPrint(indent))
   else declarations.foldLeft("")((a, b) => a + b.prettyPrint(indent)) + "; /* " + comment + " */"
+
+  def hasComment: Boolean = comment != null
 
   def notEmpty(): Boolean = declarations.nonEmpty && declarations.foldRight(false)((a, b) => a.notEmpty() || b)
 
@@ -34,7 +36,6 @@ case class MultiDeclaration(declarations: Seq[DeclarationImp], comment: String =
   override def aggrProp(prop: String): Int = declarations.foldRight(0)((a, b) => a.aggrProp(prop) + b)
 
   override def addComment(comment: String): DeclarationImp = MultiDeclaration(declarations, comment)
-
 
 }
 

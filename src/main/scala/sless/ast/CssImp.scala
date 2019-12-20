@@ -21,4 +21,11 @@ case class CssImp(rules: Seq[RuleImp]) extends CompilableImp {
 
   def aggrProp(prop: String): Int = rules.foldRight(0)((a, b) => a.aggrProp(prop) + b)
 
+  def hasConflicts: Boolean = rules.exists(_.internalDecClash) || rules.combinations(2).exists(
+    (a) => (a.head.seqMatches(a(1)) && a.head.decClash(a(1)))
+  )
+
+  def getConflicts: Seq[String] = rules.filter(!_.internalDecClash).combinations(2).filter(
+    (a) => (a.head.seqMatches(a(1)) && a.head.decClash(a(1)))
+  ).map(a => a.head.compile + " clashes with " + a(1).compile).toSeq
 }
